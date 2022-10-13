@@ -16,9 +16,9 @@ jobs:
       with:
         java-version: 11
     - name: Make Gradle executable
-      run: chmod +x ./gradlew
+      run: chmod +x gradle
     - name: Build Release APK
-      run: ./gradlew assembleRelease
+      run: gradle assembleRelease
     - name: Releasing using Hub
       uses: kyze8439690/action-release-releaseapk@master
       env:
