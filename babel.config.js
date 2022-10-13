@@ -11,6 +11,8 @@ module.exports = {
           screens: './src/screens',
           reducers: './src/redux/reducers',
           actions: './src/redux/actions',
+          helpers: './src/helpers',
+          config: './src/config',
         },
       },
     ],

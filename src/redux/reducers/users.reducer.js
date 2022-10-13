@@ -4,25 +4,17 @@ const usersSlice = createSlice({
   name: 'users',
   initialState: {
     users: [],
+    currentUser: {},
   },
   reducers: {
-    addUser: (state, action) => {
-      const {name, score} = action.payload;
-      state.users.push({name, score});
+    setCurrentUser: (state, action) => {
+      state.currentUser = action.payload;
     },
-    updateUser: (state, action) => {
-      const {name, score} = action.payload;
-      const user = state.users.find(user => user.name === name);
-      user.score = score;
+    updateScore: (state, action) => {
+      state.currentUser.score = state.currentUser.score + action.payload;
     },
-    deleteUser: (state, action) => {
-      const {name} = action.payload;
-      const user = state.users.find(user => user.name === name);
-      const index = state.users.indexOf(user);
-      state.users.splice(index, 1);
-    },
-    resetUsers: state => {
-      state.users = [];
+    resetScore: state => {
+      state.currentUser.score = 0;
     },
   },
 });

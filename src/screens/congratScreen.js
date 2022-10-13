@@ -3,40 +3,19 @@ import {StyleSheet, Text, View, Linking} from 'react-native';
 import {Divider} from 'react-native-elements';
 import PieChart from 'react-native-pie-chart';
 import {Button} from 'react-native-elements';
-import {useStateValue} from '../stateProvider';
 import Questions from '../questions.json';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-let storeData = async (user, score) => {
-  let currentLeaderboard = await AsyncStorage.getItem('leaderBoard');
-  let newData = {
-    name: user,
-    score: score,
-  };
-  if (currentLeaderboard == null) {
-    currentLeaderboard = [];
-    currentLeaderboard.push(newData);
-  } else {
-    currentLeaderboard = JSON.parse(currentLeaderboard);
-    currentLeaderboard.push(newData);
-  }
-  await AsyncStorage.setItem(
-    'leaderBoard',
-    JSON.stringify(currentLeaderboard),
-  ).catch(() => {
-    console.log('error saving');
-  });
-};
+import {useSelector} from 'react-redux';
 const CongratScreen = ({navigation}) => {
-  const [{user, score}] = useStateValue();
-  storeData(user, score);
+  const {currentUser} = useSelector(state => state.users);
+  const {questions} = useSelector(state => state.questions);
   const widthAndHeight = 150;
-  const series = [score, Questions.questions.length - score];
+  const score = currentUser?.score;
+  const series = [score, questions.length - score];
   const sliceColor = ['#00FF00'];
   return (
     <View style={styles.cogratsScreen}>
       <Text style={styles.congratsText}>
-        Congratulations {user}, You've scored {score} points
+        Congratulations {currentUser?.name}, You've scored {score} points
       </Text>
       <PieChart
         widthAndHeight={widthAndHeight}
@@ -54,15 +33,21 @@ const CongratScreen = ({navigation}) => {
         onPress={() => {
           navigation.navigate('leaderBoardScreen');
         }}
+        containerStyle={{
+          width: 200,
+          marginVertical: 10,
+        }}
       />
-      <Text style={styles.congratsText}>Liked it?</Text>
       <Button
-        title="Give a ⭐ on github"
-        type="outline"
+        title="Ulangi"
+        type="solid"
+        containerStyle={{
+          width: 200,
+        }}
         onPress={() => {
-          Linking.openURL(
-            'https://www.github.com/vivekkj123/quiz-app-react-native',
-          );
+          navigation.navigate('WelcomeScreen', {
+            index: 0,
+          });
         }}
       />
     </View>

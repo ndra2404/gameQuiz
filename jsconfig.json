@@ -6,6 +6,8 @@
         "screens/*": ["./src/screens/*"],
         "redux/*": ["./src/redux/*"],
         "assets/*": ["./assets/*"],
+        "helpers/*": ["./src/helpers/*"],
+        "config/*": ["./src/config/*"],
       }
     },
     "exclude": ["node_modules"]

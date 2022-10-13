@@ -1,23 +1,25 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Leaderboard from 'react-native-leaderboard';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-let getData = async setData => {
-  let LeaderboardData = await AsyncStorage.getItem('leaderBoard');
-  setData(JSON.parse(LeaderboardData));
-};
+import {useDispatch, useSelector} from 'react-redux';
+import {
+  fetchleaderboards,
+  storeLeaderboard,
+} from 'redux/reducers/leaderboads.reducer';
 const LeaderBoardScreen = () => {
-  const [Data, setData] = useState([]);
-
+  const dispatch = useDispatch();
   useEffect(() => {
-    getData(setData);
-  }, [setData]);
-  // console.log(Data);
+    dispatch(fetchleaderboards());
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const {leaderboards} = useSelector(state => state.leaderboards);
+  const [Data, setData] = useState([{name: 'Aman', score: 200}]);
+  console.log('datal', leaderboards);
   return (
     <View>
       <Text style={styles.HeadLeaderboard}>LeaderBoard 📊</Text>
-      <Leaderboard data={Data} sortBy="score" labelBy="name" />
+      <Leaderboard data={leaderboards} sortBy="score" labelBy="name" />
     </View>
   );
 };

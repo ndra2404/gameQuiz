@@ -1,19 +1,30 @@
-import {createSlice} from '@reduxjs/toolkit';
-
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import {get} from 'helpers/request';
+export const fetchQuestions = createAsyncThunk(
+  'question/fetchQuestions',
+  async () => {
+    const response = await get('questions', {}, {});
+    return response.data.data;
+  },
+);
 const questionSlice = createSlice({
-  name: 'question',
+  name: 'questions',
   initialState: {
     questions: [],
-    currentQuestion: 0,
-    score: 0,
-    isFinished: false,
+    loading: false,
   },
-  reducers: {
-    setQuestions: (state, action) => {
+  reducers: {},
+  extraReducers: {
+    [fetchQuestions.pending]: state => {
+      state.loading = true;
+    },
+    [fetchQuestions.fulfilled]: (state, action) => {
+      state.loading = false;
       state.questions = action.payload;
+    },
+    [fetchQuestions.rejected]: state => {
+      state.loading = false;
     },
   },
 });
-
-export const {setQuestions} = questionSlice.actions;
-export default questionSlice.reducer;
+export const questionReducer = questionSlice.reducer;
