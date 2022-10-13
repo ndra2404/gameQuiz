@@ -4,23 +4,11 @@ on:
  push:
   branches:
    - master
-   
 jobs:
-  Gradle:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - name: checkout code
-      uses: actions/checkout@v2
-    - name: setup jdk
-      uses: actions/setup-java@v1
-      with:
-        java-version: 11
-    - name: Make Gradle executable
-      run: chmod +x gradle
-    - name: Build Release APK
-      run: gradle assembleRelease
-    - name: Releasing using Hub
-      uses: kyze8439690/action-release-releaseapk@master
-      env:
-       GITHUB_TOKEN: ${{ secrets.TOKEN }}
-       APP_FOLDER: app
+      - name: Checkout the code
+        uses: actions/checkout@v2
+      - name: Build the app
+        run: ./gradlew build
