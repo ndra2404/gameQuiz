@@ -14,16 +14,12 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - name: change directory
-      run: cd android
     - name: Make Gradle executable
-      run: chmod +x ./gradlew
+      run: chmod +x ./gradle
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradle build
     - name: Build Debug APK
-      run: ./gradlew assembleDebug
-    - name: Generate version.txt for Hub release
-      run: ./gradlew generateVersionTxt
+      run: ./gradle assembleDebug
     - name: Releasing using Hub
       uses: valley-fordham/action-release-debugapk@master
       env:
