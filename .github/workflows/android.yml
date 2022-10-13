@@ -14,12 +14,14 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Look for gradlew
+      run: find / -type f -name "gradlew"
     - name: Make Gradle executable
-      run: chmod +x ./gradle
+      run: chmod +x gradle
     - name: Build with Gradle
-      run: ./gradle build
+      run: gradle build
     - name: Build Debug APK
-      run: ./gradle assembleDebug
+      run: gradle assembleDebug
     - name: Releasing using Hub
       uses: valley-fordham/action-release-debugapk@master
       env:
