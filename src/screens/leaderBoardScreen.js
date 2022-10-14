@@ -6,6 +6,7 @@ import {
   fetchleaderboards,
   storeLeaderboard,
 } from 'redux/reducers/leaderboads.reducer';
+import {Header} from 'react-native-elements';
 const LeaderBoardScreen = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -18,6 +19,12 @@ const LeaderBoardScreen = () => {
   console.log('datal', leaderboards);
   return (
     <View>
+      <Header
+        centerComponent={{
+          text: '',
+          style: {color: '#fff'},
+        }}
+      />
       <Text style={styles.HeadLeaderboard}>LeaderBoard 📊</Text>
       <Leaderboard data={leaderboards} sortBy="score" labelBy="name" />
     </View>

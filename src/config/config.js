@@ -1,4 +1,4 @@
 const config = {
-  apiUrl: 'http://10.32.168.40:3002/',
+  apiUrl: 'https://apiquiz.kitaberkarya.com/',
 };
 export default config;
