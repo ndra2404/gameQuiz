@@ -21,6 +21,7 @@ jobs:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/
   build-ios:
+    needs: build-android
     runs-on: [self-hosted, macos]
     steps: 
       - uses: actions/checkout@v2
